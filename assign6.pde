@@ -33,6 +33,7 @@ boolean leftState = false;
 boolean rightState = false;
 boolean downState = false;
 
+
 void setup() {
 	size(640, 480, P2D);
 	frameRate(60);
@@ -148,12 +149,21 @@ void initGame(){
 		float newX = random(0, width - SOIL_SIZE);
 		float newY = SOIL_SIZE * ( i * 4 + floor(random(4)));
 
+    if(i==0 || i==1){
+      enemies[i] = new Soldier(newX, newY);
+    } else if(i==2 || i==3){
+      enemies[i] = new Dinosaur(newX, newY);
+    } else {
+      enemies[i] = new Robot(newX, newY);
+    }
+    
+    /*
 		switch(i){
 			case 0: case 1: enemies[i] = new Soldier(newX, newY);
-			case 2: case 3: // Requirement 4: Create new Dinosaur in row 9 - 16
-			case 4: case 5: // Requirement 5: Create new Robot in row 17 - 25
+			case 2: case 3: enemies[i] = new Dinosaur(newX, newY); // Requirement 4: Create new Dinosaur in row 9 - 16
+			case 4: case 5: enemies[i] = new Robot(newX, newY); // Requirement 5: Create new Robot in row 17 - 25
 		}
-
+    */
 
 	}
 
@@ -170,7 +180,15 @@ void initGame(){
 		// 	- Create and store cabbages/clocks in the same items array
 		// 	- You can use the above newX/newY to set their position in constructor
 
+    float randomPick = random(0,2);
+    if(randomPick >= 1){
+      items[i] = new Cabbage(newX, newY);
+    } else {
+      items[i] = new Clock(newX, newY);
+    }
 	}
+
+
 }
 
 void draw() {
@@ -237,6 +255,10 @@ void draw() {
 
 		// Items
 		// Requirement #3: Display and check collision with player for each item in Item[] items
+    for(int i = 0; i < items.length; i++){
+      items[i].display();
+      items[i].checkCollision(player);
+    }
 
 		// Player
 

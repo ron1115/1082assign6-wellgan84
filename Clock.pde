@@ -1,6 +1,30 @@
-class Clock {
+class Clock extends Item{
 	// Requirement #2: Complete Clock Class
+  
+  void display(){
+    // Display Clock
+    if(isAlive == true){
+      image(clock, x, y);
+    }
+  }
+  
+  void checkCollision(Player player){
+    if(isAlive == true && isHit(x, y, SOIL_SIZE, SOIL_SIZE, player.x, player.y, player.w, player.h)){
+      isAlive = false;
+      addTime(CLOCK_BONUS_SECONDS);
+      x = y = -1000; // Now that they're objects, toggle isAlive instead of throwing them away from screen
+    }
+  }
+  
+  void update(){
+    if(x >= width) x = -w;
+  }
 
+  Clock(float x, float y){
+    super(x, y);
+  }
+  
+  
 	/*
 	Code for Reference:
 
